@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="A private, 18-question check of your AI habits for clinicians, with personalised next steps. From The Efficient GP.">
+<style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Clinician AI Habits Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow reading column in The Efficient GP's Substack theme (cream paper, coral accent, Spectral text, bold system headings). Single light look by design, to match the newsletter. */
+:root{
+  --paper:#f2f2e3; --card:#f8f8ee; --ink:#363737; --muted:#6f706a; --line:#d6d6c8;
+  --accent:#cb5b4b; --accent-text:#ad4434; --accent-soft:#f9ddd5; --on-accent:#ffffff;
+  --flag:#8a4b00; --flag-bg:#fbefd6; --flag-line:#e8cf9c;
+  --display:"SF Pro Display", -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --body:Spectral, Georgia, "Times New Roman", serif;
+  --ui:-apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:18px/1.6 var(--body);padding:0 16px}
+.wrap{max-width:720px;margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font:600 13px/1 var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
+h1{font:700 clamp(30px,6vw,44px)/1.05 var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font:700 24px/1.2 var(--display);margin:0;text-wrap:balance}
+h3{font:600 17px/1.3 var(--display);margin:0}
+.byline{margin:0;font:15px/1.4 var(--ui);color:var(--muted)}
+.byline a{color:var(--accent-text);text-underline-offset:3px}
+.lede{margin:0;max-width:62ch;color:var(--muted)}
+.privacy{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--muted);margin:0}
+.privacy b{color:var(--ink);font-weight:600}
+.dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:7px}
+
+.rail{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.rail div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.rail span{font:500 11px/1 var(--mono);color:var(--muted);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail i{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;height:6px}
+.rail i b{background:var(--line);border-radius:1px}
+.rail i b.done{background:var(--accent)}
+.rail div.on span{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.qmeta{display:flex;justify-content:space-between;gap:12px;font:500 12px/1 var(--mono);color:var(--muted);letter-spacing:.04em}
+.qtext{font:700 21px/1.3 var(--display);margin:0;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;border:0}
+.opt{font-size:17px;display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;font:inherit;color:inherit;background:transparent;border:1px solid var(--line);border-radius:8px;padding:12px 14px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--accent)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.opt[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt .k{flex:none;font:500 12px/20px var(--mono);width:22px;height:22px;border:1px solid var(--line);border-radius:50%;text-align:center;color:var(--muted)}
+.opt[aria-checked="true"] .k{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+button.btn{font:600 15px/1 var(--ui);border-radius:8px;padding:12px 18px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
+button.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.results{display:flex;flex-direction:column;gap:28px}
+.flags{background:var(--flag-bg);border:1px solid var(--flag-line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.flags h2{color:var(--flag);font-size:20px}
+.flags p{margin:0}
+.flags ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px}
+.levels{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line)}
+.lv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.lv .name{display:flex;gap:10px;align-items:baseline;min-width:0}
+.lv .code{font:500 12px/1 var(--mono);color:var(--muted)}
+.lv .lvl{font-size:14px;color:var(--muted);grid-column:1/-1}
+.scale{display:grid;grid-template-columns:repeat(4,28px);gap:3px}
+.scale b{height:12px;border-radius:2px;background:var(--line)}
+.scale b.on{background:var(--accent)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font:500 11px/1 var(--mono);color:var(--muted);letter-spacing:.03em}
+.steps{display:flex;flex-direction:column;gap:14px}
+.step{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.step p{margin:0}
+.step .tag{font:500 12px/1 var(--mono);color:var(--accent-text);letter-spacing:.04em}
+.links{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none;font-size:15px}
+.links a{color:var(--accent-text);text-underline-offset:3px}
+.links .soon{color:var(--muted)}
+.strength{margin:0}
+.sub{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.sub p{margin:0}
+.subbtn{font:600 15px/1 var(--ui);background:var(--accent);color:var(--on-accent);text-decoration:none;padding:13px 20px;border-radius:8px}
+.subbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.share{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-direction:column;gap:12px}
+.share p{margin:0;max-width:66ch}
+.share a{color:var(--accent-text);text-underline-offset:3px}
+.shareform{display:flex;flex-direction:column;gap:14px}
+.shareform label{display:flex;flex-direction:column;gap:6px;font:500 15px/1.4 var(--ui)}
+.shareform select{font:16px var(--ui);padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
+.shareform .consent{flex-direction:row;align-items:flex-start;gap:10px;font-weight:400}
+.shareform .consent input{margin-top:4px;accent-color:var(--accent);width:18px;height:18px;flex:none}
+.sendmsg{font:15px var(--ui);color:var(--muted);margin-left:8px}
+.fine{font-size:13px;color:var(--muted);margin:0;max-width:66ch}
+.copied{font-size:14px;color:var(--accent-text);align-self:center}
+textarea#copybox{width:100%;min-height:140px;font:13px/1.5 var(--mono);color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px}
+@media (max-width:480px){.card{padding:18px}.qtext{font-size:18px}.rail span{font-size:10px}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">The Efficient GP</div>
+    <h1>Clinician AI Habits Check</h1>
+    <p class="lede">Eighteen quick questions about how you actually use AI tools: ChatGPT, Copilot, Gemini, Claude or any other. You'll get a private picture of where you are on six habits, any safety points worth checking, and one practical next step for each gap.</p>
+    <p class="byline">By Dr David Stokes · GP and author of <a href="https://theefficientgp.substack.com" target="_blank" rel="noopener">The Efficient GP</a></p>
+    <p class="privacy"><span class="dot" aria-hidden="true"></span><span><b>Your answers stay in this browser.</b> Nothing is sent unless you choose, at the end, to add them anonymously. This is a mirror for you, not a test, a grade or something for an employer or appraiser.</span></p>
+  </header>
+
+  <nav class="rail" id="rail" aria-label="Progress"></nav>
+  <main id="stage"></main>
+</div>
+
+<script>
+// ---- Anonymous data store (Supabase). Filled in after the project is created. ----
+const STORE = { url: "https://nbyahkvgaohekqgsubjv.supabase.co", key: "sb_publishable_z7Fyg6T2zwfYi9bStb5Mqw_0PE1T08i" };
+// ---- Edit links here. Leave url empty to show "coming soon". ----
+const POSTS = {
+  audit:    {title:"I audited 221 of my own AI conversations. Here's what I found", url:""},
+  folders:  {title:"Why my AI projects were just folders", url:""},
+  chars98:  {title:"The 98-character problem", url:""},
+  synthetic:{title:"Synthetic patients first: testing clinical AI safely", url:""},
+  skill:    {title:"From five chats to one skill", url:""},
+  argue:    {title:"Teaching myself to argue with the machine", url:""},
+  scribes:  {title:"AI Medical Scribes: A Game-Changer for UK General Practice?", url:"https://theefficientgp.substack.com/p/ai-medical-scribes-a-game-changer"}
+};
+const EXT = {
+  fluency: {title:"Anthropic Academy: AI Fluency: Framework & Foundations (free course)", url:"https://anthropic.skilljar.com/ai-fluency-framework-foundations"},
+  prompting:{title:"Anthropic: prompt engineering overview", url:"https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"},
+  scribe:  {title:"NHS England: guidance on AI-enabled ambient scribing products", url:"https://www.england.nhs.uk/long-read/guidance-on-the-use-of-ai-enabled-ambient-scribing-products-in-health-and-care-settings/"},
+  ico:     {title:"ICO: guidance on AI and data protection", url:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/"}
+};
+
+const LEVELS = ["Novice","Developing","Proficient","Expert"];
+const DIMS = [
+  {id:"D1", name:"Delegation", short:"Delegation", about:"choosing what to hand to AI"},
+  {id:"D2", name:"Description", short:"Description", about:"briefing it well"},
+  {id:"D3", name:"Discernment", short:"Discernment", about:"judging what comes back"},
+  {id:"D4", name:"Iteration", short:"Iteration", about:"steering the conversation"},
+  {id:"D5", name:"Workflow building", short:"Workflow", about:"turning repeat work into systems"},
+  {id:"D6", name:"Clinical and IG safety", short:"Safety", about:"keeping patients and data safe"}
+];
+
+// Each option: [text, level]. Order is mixed on purpose.
+const Q = [
+  {d:0, t:"What do you mostly use AI for?", o:[
+    ["Drafting the odd email or summary when I think of it",2],
+    ["Quick facts and lookups, like a search engine",1],
+    ["Breaking bigger projects into parts and deciding which parts AI does",4],
+    ["Drafting, summarising and analysing, while I make the decisions",3]]},
+  {d:0, t:"How often do you decide that AI is not the right tool for a job?", o:[
+    ["Routinely, and I could tell you why",4],
+    ["I don't really think about it",1],
+    ["Sometimes, for tasks that need my judgement",3],
+    ["Usually only after it has given me a poor answer",2]]},
+  {d:0, t:"You need a new practice protocol. How would AI fit in?", o:[
+    ["I'd use it for research and a first draft, and decide the content myself",3],
+    ["I'd ask it to write the whole thing",1],
+    ["I'd plan the stages: AI for evidence summary, drafting and critique; me for judgement and sign-off",4],
+    ["I'd ask it to write it, then edit what comes back",2]]},
+
+  {d:1, t:"What does your first message usually look like?", o:[
+    ["A line or two, then I add details when the answer misses",2],
+    ["Goal, audience, format and constraints up front, with any material attached",3],
+    ["A short question or one line",1],
+    ["A full brief, and for regular work, saved instructions do this for me",4]]},
+  {d:1, t:"When you're not sure what to ask for, you…", o:[
+    ["Ask the AI to interview me with questions first",3],
+    ["Make several attempts until something works",2],
+    ["Ask it to interview me, then save the brief to reuse",4],
+    ["Ask something vague and hope",1]]},
+  {d:1, t:"Do you use projects, custom instructions or saved assistants?", o:[
+    ["Every active project has a brief I keep up to date",4],
+    ["No",1],
+    ["My key ones have instructions and reference files",3],
+    ["I have some set up, but they're mostly empty folders",2]]},
+
+  {d:2, t:"AI gives you a fact or figure you plan to use. What do you do?", o:[
+    ["Use it if it sounds plausible",2],
+    ["Check it independently, and ask what would make it wrong",4],
+    ["Use it",1],
+    ["Ask for the source, or check the important ones",3]]},
+  {d:2, t:"When AI points out a problem in your work, you…", o:[
+    ["Accept its suggested fix",2],
+    ["Also ask it to look for problems I haven't spotted, or argue the opposite case",4],
+    ["Ignore it",1],
+    ["Weigh it up and add my own correction",3]]},
+  {d:2, t:"Before relying on an important output, you…", o:[
+    ["Challenge specific claims in it",3],
+    ["Read it through",2],
+    ["Ask for the strongest counter-argument and test it against another source or person",4],
+    ["Use it as it is",1]]},
+
+  {d:3, t:"The first answer isn't right. What next?", o:[
+    ["Say exactly what to change and why",3],
+    ["Give up or start a new chat",1],
+    ["Be specific, and restart deliberately with a summary if the chat gets muddled",4],
+    ["Ask it to make it better",2]]},
+  {d:3, t:"For a long piece of work, you…", o:[
+    ["Go back and forth as things come up",2],
+    ["Plan the stages first and review each before moving on",4],
+    ["Write one big prompt",1],
+    ["Work in steps with checkpoints",3]]},
+  {d:3, t:"How do your messages usually arrive?", o:[
+    ["Complete thoughts, and I tell it to wait when I'm sending several parts",4],
+    ["Lots of short fragments, often dictated",1],
+    ["Mostly complete thoughts",3],
+    ["Sometimes half-finished, then I add more",2]]},
+
+  {d:4, t:"You do the same kind of task every week. How do you start it?", o:[
+    ["From a saved prompt, template or project",3],
+    ["From scratch each time",1],
+    ["It's built into a reusable assistant, skill or automation",4],
+    ["By copying an old prompt",2]]},
+  {d:4, t:"How does AI connect to your other tools (email, documents, calendar)?", o:[
+    ["I copy and paste between them",2],
+    ["It works directly in my tools for set jobs",4],
+    ["It doesn't",1],
+    ["I use some built-in connections",3]]},
+  {d:4, t:"Do you know which AI tool to use for which job?", o:[
+    ["I'm clear on my main ones",3],
+    ["I use one for everything",1],
+    ["I have a simple written map, and others use it too",4],
+    ["Sometimes I'm not sure",2]]},
+
+  {d:5, flag:"pid", t:"When AI work involves a patient, what goes in?", o:[
+    ["I remove names but other details sometimes stay in",2],
+    ["I always de-identify (age and sex only) and use approved tools",3],
+    ["Whatever I'm working on, names and all",1],
+    ["Clear rules: patient data only in approved, contracted tools; new tools tested on made-up cases",4]]},
+  {d:5, flag:"check", t:"AI suggests a dose, threshold or pathway. What do you do?", o:[
+    ["Check it against NICE, CKS or the BNF before acting",3],
+    ["Use it if it sounds right",2],
+    ["Check it, note the source, and treat AI as a prompt for my own thinking",4],
+    ["Use it",1]]},
+  {d:5, flag:"newtool", t:"You want to try a new AI tool for clinical work, such as a scribe or letter tool.", o:[
+    ["Try it with a few real patients to see",2],
+    ["Check local approval (DPIA, clinical safety sign-off), then try it on made-up cases first",4],
+    ["Check my practice has approved it first",3],
+    ["Just start using it",1]]}
+];
+
+const FLAGS = {
+  pid:"You may be putting identifiable patient details into AI tools. Use only tools your practice has approved for patient data. If you think identifiable data has gone into a tool that isn't approved, speak to your Data Protection Officer or Caldicott Guardian. They can advise what, if anything, needs doing.",
+  check:"AI clinical suggestions can be wrong in ways that sound right. Check doses, thresholds and pathways against NICE, CKS or the BNF before acting.",
+  newtool:"Before using a new AI tool with patients, check it's approved locally (data protection impact assessment and clinical safety sign-off), and try it on made-up cases first."
+};
+
+const STEPS = {
+  D1:{1:"Pick one weekly writing task, such as a practice email or meeting summary, and hand it to AI this week. Keep the decisions for yourself.",
+      2:"Before your next task, write one line: what AI drafts, and what you decide. It turns one-off help into deliberate delegation.",
+      3:"Keep a two-week \"didn't use AI because…\" log. Knowing when not to use it is the step to expert.",
+      res:[POSTS.audit, EXT.fluency]},
+  D2:{1:"Open your next three chats with four things: goal, audience, format and constraints.",
+      2:"Put everything in the first message. If you're unsure what to include, ask the AI to interview you first.",
+      3:"Turn your best brief into saved project instructions so you never type it again.",
+      res:[POSTS.chars98, POSTS.folders, EXT.prompting]},
+  D3:{1:"This week, check one fact from every AI answer you use against a source you trust.",
+      2:"When the AI corrects something, add one correction of your own each time.",
+      3:"End every important output with one question: \"What would make this wrong?\"",
+      res:[POSTS.argue, EXT.fluency]},
+  D4:{1:"When the first answer misses, say exactly what to change and why, instead of starting again.",
+      2:"Swap \"make it better\" for one specific instruction, such as \"shorter and plainer, for patients over 70\".",
+      3:"For long work, plan the stages first and review each one before moving on.",
+      res:[EXT.prompting, EXT.fluency]},
+  D5:{1:"Save your best prompt somewhere you can find it and reuse it.",
+      2:"Give the task you repeat most a home: a project, a saved prompt or a custom assistant.",
+      3:"Turn your most repeated task into a reusable skill or automation, and write a one-page map of which tool does which job.",
+      res:[POSTS.skill, EXT.fluency]},
+  D6:{1:"Read the safety points above first, then write down three rules: what never goes into AI, which tools are approved, and who to ask.",
+      2:"Write your personal AI rules on one page: what never goes in, which tools are approved, and made-up cases first for anything new.",
+      3:"Put your rules in writing and share them with your team. Test every new tool on made-up cases before real patients.",
+      res:[POSTS.synthetic, POSTS.scribes, EXT.scribe, EXT.ico]}
+};
+
+const answers = new Array(Q.length).fill(null);
+let cur = 0;
+const $ = s => document.querySelector(s);
+
+function renderRail(){
+  const r = $("#rail"); r.innerHTML = "";
+  DIMS.forEach((d,di)=>{
+    const qs = Q.map((q,i)=>[q,i]).filter(([q])=>q.d===di);
+    const div = document.createElement("div");
+    if (cur < Q.length && Q[cur].d===di) div.className="on";
+    div.innerHTML = `<span>${d.id} ${d.short}</span><i>${qs.map(([,i])=>`<b class="${answers[i]!==null?'done':''}"></b>`).join("")}</i>`;
+    r.appendChild(div);
+  });
+}
+
+function renderQ(){
+  renderRail();
+  const q = Q[cur], d = DIMS[q.d];
+  const st = $("#stage");
+  st.innerHTML = `
+    <section class="card" aria-live="polite">
+      <div class="qmeta"><span>${d.id} · ${d.name.toUpperCase()}</span><span>${cur+1} / ${Q.length}</span></div>
+      <p class="qtext" id="qtext">${q.t}</p>
+      <div class="opts" role="radiogroup" aria-labelledby="qtext">
+        ${q.o.map((o,i)=>`<button type="button" class="opt" id="opt-${cur}-${i}" role="radio" aria-checked="${answers[cur]===i}" data-i="${i}"><span class="k">${"ABCD"[i]}</span><span>${o[0]}</span></button>`).join("")}
+      </div>
+      <div class="nav">
+        <button type="button" class="btn" id="back" ${cur===0?"disabled":""}>Back</button>
+        <button type="button" class="btn primary" id="next" ${answers[cur]===null?"disabled":""}>${cur===Q.length-1?"See my results":"Next"}</button>
+      </div>
+    </section>`;
+  st.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{
+    answers[cur] = +b.dataset.i;
+    st.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-checked", x===b));
+    $("#next").disabled = false; renderRail();
+  }));
+  $("#back").addEventListener("click",()=>{ if(cur>0){cur--;renderQ();} });
+  $("#next").addEventListener("click",()=>{ if(answers[cur]===null) return; if(cur<Q.length-1){cur++;renderQ();} else renderResults(); });
+}
+
+function median3(a){ const s=[...a].sort((x,y)=>x-y); return s[1]; }
+
+function compute(){
+  const lv = DIMS.map((d,di)=>median3(Q.map((q,i)=>[q,i]).filter(([q])=>q.d===di).map(([q,i])=>q.o[answers[i]][1])));
+  const flags = Q.map((q,i)=>q.flag && q.o[answers[i]][1]<=2 ? q.flag : null).filter(Boolean);
+  return {lv, flags};
+}
+
+function linkList(res){
+  return `<ul class="links">${res.map(r=> r.url ? `<li><a href="${r.url}" target="_blank" rel="noopener">${r.title}</a></li>` : `<li class="soon">${r.title} · coming soon on The Efficient GP</li>`).join("")}</ul>`;
+}
+
+function renderResults(){
+  cur = Q.length; renderRail();
+  const {lv, flags} = compute();
+  const order = DIMS.map((d,i)=>i).sort((a,b)=> lv[a]-lv[b] || a-b);
+  const gaps = order.filter(i=>lv[i]<4).slice(0,2);
+  const top = Math.max(...lv); const strengths = DIMS.filter((d,i)=>lv[i]===top);
+  const st = $("#stage");
+  let html = `<div class="results">`;
+  if (flags.length){
+    html += `<section class="flags" aria-labelledby="fh"><h2 id="fh">Worth checking first</h2>
+      <p>These are private prompts to check, not judgements. They don't change your other results.</p>
+      <ul>${flags.map(f=>`<li>${FLAGS[f]}</li>`).join("")}</ul></section>`;
+  }
+  html += `<section style="display:flex;flex-direction:column;gap:14px"><h2>Where you are now</h2>
+    <p class="strength">Your strongest habit: <b>${strengths.map(s=>s.name).join(" and ")}</b> (${LEVELS[top-1].toLowerCase()}). Levels describe where you are on a path, not how good you are.</p>
+    <div class="legend"><span>1 NOVICE</span><span>2 DEVELOPING</span><span>3 PROFICIENT</span><span>4 EXPERT</span></div>
+    <div class="levels">${DIMS.map((d,i)=>`<div class="lv"><div class="name"><span class="code">${d.id}</span><h3>${d.name}</h3></div>
+      <div class="scale" role="img" aria-label="${d.name}: level ${lv[i]} of 4, ${LEVELS[lv[i]-1]}">${[1,2,3,4].map(n=>`<b class="${n<=lv[i]?'on':''}"></b>`).join("")}</div>
+      <div class="lvl">${LEVELS[lv[i]-1]} · ${d.about}</div></div>`).join("")}</div></section>`;
+  const shown = gaps.length ? gaps : [order[0]];
+  html += `<section class="steps"><h2>${gaps.length?"Your next steps":"Keep going"}</h2>
+    ${shown.map(i=>{const d=DIMS[i], s=STEPS[d.id];
+      const text = lv[i]<4 ? s[lv[i]] : "You're at expert level across the board. The next step is teaching: share your rules and workflows with your team.";
+      return `<article class="step"><div class="tag">${d.id} · ${d.name.toUpperCase()} · ${LEVELS[lv[i]-1].toUpperCase()}</div><p>${text}</p>${linkList(s.res)}</article>`;}).join("")}
+  </section>`;
+  html += `<div class="nav"><button type="button" class="btn" id="retake">Start again</button>
+    <span style="display:flex;gap:10px;flex-wrap:wrap"><span class="copied" id="copied" hidden>Copied</span><button type="button" class="btn primary" id="copy">Copy my next steps</button></span></div>
+    <textarea id="copybox" hidden readonly aria-label="Your next steps"></textarea>
+    <section class="sub"><h2>Get the posts for your next step</h2><p>The Efficient GP covers practical AI and efficiency for general practice, one habit at a time.</p><a class="subbtn" href="https://theefficientgp.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to The Efficient GP</a></section>
+    <section class="share" id="share">
+      <h2>Help other clinicians (optional)</h2>
+      <p>You can add your answers, anonymously, to The Efficient GP's picture of how clinicians use AI. Only your 18 answers, your six levels and the two optional details below are sent. No name, email, practice, location or free text, and no cookies. <a href="privacy.html" target="_blank" rel="noopener">How this data is handled</a></p>
+      <div class="shareform">
+        <label for="role">Your role (optional)<select id="role"><option value="">Prefer not to say</option><option value="gp">GP</option><option value="gp_trainee">GP trainee</option><option value="nurse">Nurse</option><option value="pharmacist">Pharmacist</option><option value="paramedic_acp">Paramedic or advanced practitioner</option><option value="practice_manager">Practice manager</option><option value="admin">Admin or reception</option><option value="other">Other</option></select></label>
+        <label for="tool">AI tool you use most (optional)<select id="tool"><option value="">Prefer not to say</option><option value="chatgpt">ChatGPT</option><option value="copilot">Microsoft Copilot</option><option value="gemini">Google Gemini</option><option value="claude">Claude</option><option value="several">Several equally</option><option value="other">Other</option></select></label>
+        <label class="consent" for="consent"><input type="checkbox" id="consent"> I agree to add my anonymous answers. I understand they can't be withdrawn later, because nothing links them to me.</label>
+        <div><button type="button" class="btn primary" id="send" disabled>Add my anonymous answers</button> <span class="sendmsg" id="sendmsg" role="status"></span></div>
+      </div>
+    </section>
+    <p class="fine">This is a self-reflection tool based on the Clinician AI Maturity Framework (v0.2), adapted from Anthropic's 4D AI Fluency model with a clinical safety dimension. It is not medical, legal or information-governance advice, and it is not designed for appraisal, revalidation or use by employers. Nothing you entered is stored unless you choose to add it above.</p>
+  </div>`;
+  st.innerHTML = html;
+  const plain = ["My AI habits: next steps", ...flags.map(f=>"Check: "+FLAGS[f]), ...shown.map(i=>{const d=DIMS[i];return `${d.name}: ${lv[i]<4?STEPS[d.id][lv[i]]:"Share what works with your team."}`;}), "From the Clinician AI Habits Check, The Efficient GP"].join("\n\n");
+  wireShare(lv);
+  $("#retake").addEventListener("click",()=>{ answers.fill(null); cur=0; renderQ(); window.scrollTo({top:0}); });
+  $("#copy").addEventListener("click",()=>{
+    const ok=()=>{ $("#copied").hidden=false; setTimeout(()=>$("#copied").hidden=true,2000); };
+    const fallback=()=>{ const t=$("#copybox"); t.value=plain; t.hidden=false; t.focus(); t.select(); };
+    try{ navigator.clipboard.writeText(plain).then(ok).catch(fallback); }catch(e){ fallback(); }
+  });
+  st.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+}
+
+function wireShare(lv){
+  const box=$("#consent"), btn=$("#send"), msg=$("#sendmsg");
+  if (!STORE.url.startsWith("https://")) { $("#share").hidden = true; return; }
+  let sent=false;
+  box.addEventListener("change",()=>{ btn.disabled = !box.checked || sent; });
+  btn.addEventListener("click", async ()=>{
+    if (!box.checked || sent) return;
+    btn.disabled = true; msg.textContent = "Sending…";
+    const body = { answers: Q.map((q,i)=>q.o[answers[i]][1]), levels: lv,
+                   role: $("#role").value || null, main_tool: $("#tool").value || null, framework_version: "v0.2" };
+    try{
+      const r = await fetch(STORE.url + "/rest/v1/responses", { method:"POST",
+        headers:{ "apikey":STORE.key, "Content-Type":"application/json", "Prefer":"return=minimal" },
+        body: JSON.stringify(body), credentials:"omit", referrerPolicy:"no-referrer" });
+      if (!r.ok) throw new Error(r.status);
+      sent = true; msg.textContent = "Added. Thank you.";
+    }catch(e){ btn.disabled=false; msg.textContent = "That didn't go through. Please try again later."; }
+  });
+}
+
+renderQ();
+</script>
+
+</body>
+</html>
