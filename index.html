@@ -405,6 +405,15 @@ function wireShare(lv){
   });
 }
 
+// Post links can be updated without touching this file: edit links.json in the repo.
+fetch("links.json", {cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{
+  if (!j || typeof j!=="object") return;
+  for (const [k,v] of Object.entries(j)) {
+    if (POSTS[k] && v && typeof v.url==="string" && /^https:\/\//.test(v.url)) POSTS[k].url = v.url;
+    if (POSTS[k] && v && typeof v.title==="string" && v.title.trim()) POSTS[k].title = v.title.trim();
+  }
+}).catch(()=>{});
+
 renderQ();
 </script>
 

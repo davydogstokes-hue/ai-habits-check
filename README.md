@@ -10,7 +10,7 @@ A private, 18-question self-assessment of AI habits for clinicians, from [The Ef
 For the individual only: not a grade, not for employers or appraisal. Safety flags are private prompts. Nothing is sent unless the reader ticks the consent box.
 
 ## Updating
-- Post links: edit `POSTS` near the top of the script in `index.html`.
+- Post links: edit `links.json` (paste each Substack URL, then commit). No need to touch `index.html`.
 - Data store: `STORE.url` and `STORE.key` (Supabase project URL and publishable key; the publishable key is designed to be public).
 
 Licence: framework and quiz text CC BY 4.0, Dr David Stokes.

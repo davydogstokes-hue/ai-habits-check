@@ -1,0 +1,31 @@
+{
+  "_how_to": "Paste each post's Substack link between the quotes for url, then Commit. Leave url empty to show 'coming soon'. Keep the names on the left unchanged.",
+  "audit": {
+    "title": "I audited 221 of my own AI conversations. Here's what I found",
+    "url": ""
+  },
+  "folders": {
+    "title": "Why my AI projects were just folders",
+    "url": ""
+  },
+  "chars98": {
+    "title": "The 98-character problem",
+    "url": ""
+  },
+  "synthetic": {
+    "title": "Synthetic patients first: testing clinical AI safely",
+    "url": ""
+  },
+  "skill": {
+    "title": "From five chats to one skill",
+    "url": ""
+  },
+  "argue": {
+    "title": "Teaching myself to argue with the machine",
+    "url": ""
+  },
+  "scribes": {
+    "title": "AI Medical Scribes: A Game-Changer for UK General Practice?",
+    "url": "https://theefficientgp.substack.com/p/ai-medical-scribes-a-game-changer"
+  }
+}
