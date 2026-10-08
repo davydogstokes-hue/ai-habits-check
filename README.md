@@ -1,6 +1,6 @@
 # Clinician AI Habits Check
 
-A private, 18-question self-assessment of AI habits for clinicians, from [The Efficient GP](https://theefficientgp.substack.com). Based on the Clinician AI Maturity Framework v0.2 (adapted from Anthropic's 4D AI Fluency model, plus a clinical safety dimension).
+A private, 18-question self-assessment of AI habits for clinicians, from [The Efficient GP](https://theefficientgp.substack.com). Based on the Clinician AI Maturity Framework v0.2 (inspired by the AI Fluency Framework by Rick Dakan, Joseph Feller and Anthropic, which is released under CC BY-NC-SA 4.0. Three habit names are borrowed from it; the definitions, levels and questions are original, with a clinical safety dimension added).
 
 - `index.html` - the quiz. Results are calculated in the browser.
 - `privacy.html` - plain-language data notice.
