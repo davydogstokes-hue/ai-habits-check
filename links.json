@@ -1,8 +1,10 @@
 {
   "_how_to": "Paste each post's Substack link between the quotes for url, then Commit. Leave url empty to show 'coming soon'. Keep the names on the left unchanged.",
-  "audit": {
-    "title": "I audited 221 of my own AI conversations. Here's what I found",
-    "url": ""
+    "audit": {
+    "title": "I audited 221 of my own AI conversations",
+    "url": "https://theefficientgp.substack.com/p/i-audited-221-of-my-own-ai-conversations"
+  },
+
   },
   "folders": {
     "title": "Why my AI projects were just folders",
