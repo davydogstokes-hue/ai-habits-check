@@ -371,7 +371,7 @@ function renderResults(){
         <div><button type="button" class="btn primary" id="send" disabled>Add my anonymous answers</button> <span class="sendmsg" id="sendmsg" role="status"></span></div>
       </div>
     </section>
-    <p class="fine">This is a self-reflection tool based on the Clinician AI Maturity Framework (v0.2), adapted from Anthropic's 4D AI Fluency model with a clinical safety dimension. It is not medical, legal or information-governance advice, and it is not designed for appraisal, revalidation or use by employers. Nothing you entered is stored unless you choose to add it above.</p>
+    <p class="fine">This is a self-reflection tool based on the Clinician AI Maturity Framework (v0.2), inspired by the AI Fluency Framework by Rick Dakan, Joseph Feller and Anthropic. It borrows three habit names (Delegation, Description and Discernment); the definitions, levels and questions are my own, with a clinical safety dimension added. It is not medical, legal or information-governance advice, and it is not designed for appraisal, revalidation or use by employers. Nothing you entered is stored unless you choose to add it above.</p>
   </div>`;
   st.innerHTML = html;
   const plain = ["My AI habits: next steps", ...flags.map(f=>"Check: "+FLAGS[f]), ...shown.map(i=>{const d=DIMS[i];return `${d.name}: ${lv[i]<4?STEPS[d.id][lv[i]]:"Share what works with your team."}`;}), "From the Clinician AI Habits Check, The Efficient GP"].join("\n\n");
