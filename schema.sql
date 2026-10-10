@@ -44,3 +44,27 @@ group by month
 order by month;
 
 revoke all on public.responses_summary from anon, authenticated;
+
+-- Anonymous counters: one row per quiz start or completion (added October 2026).
+create table public.events (
+  id     bigint generated always as identity primary key,
+  month  date not null default (date_trunc('month', now() at time zone 'utc'))::date,
+  event  text not null,
+  constraint event_values check (event in ('start','complete'))
+);
+alter table public.events enable row level security;
+revoke all on public.events from anon, authenticated;
+grant insert (event) on public.events to anon;
+create policy "anonymous insert only" on public.events for insert to anon with check (true);
+
+-- Monthly funnel for David: started, completed, opted in.
+create view public.funnel_summary with (security_invoker = true) as
+select m.month,
+       coalesce(sum((e.event = 'start')::int), 0)    as started,
+       coalesce(sum((e.event = 'complete')::int), 0) as completed,
+       (select count(*) from public.responses r where r.month = m.month) as opted_in
+from (select month from public.events union select month from public.responses) m
+left join public.events e on e.month = m.month
+group by m.month
+order by m.month;
+revoke all on public.funnel_summary from anon, authenticated;
