@@ -4,13 +4,13 @@ A private, 18-question self-assessment of AI habits for clinicians, from [The Ef
 
 - `index.html` - the quiz. Results are calculated in the browser.
 - `privacy.html` - plain-language data notice.
-- `schema.sql` - Supabase table for anonymous, opt-in responses (insert-only for the public).
+- `schema.sql` - tables for anonymous, opt-in responses and start/finish counters (insert-only for the public), in the `habits` Postgres schema.
 
 ## Principles
 For the individual only: not a grade, not for employers or appraisal. Safety flags are private prompts. Nothing is sent unless the reader ticks the consent box.
 
 ## Updating
 - Post links: edit `links.json` (paste each Substack URL, then commit). No need to touch `index.html`.
-- Data store: `STORE.url` and `STORE.key` (Supabase project URL and publishable key; the publishable key is designed to be public).
+- Data store: `STORE.url` = `https://api.onemanhealth.com/habits` (PostgREST in front of Postgres 17 on David's VPS). `STORE.key` is empty: the server needs no key. Never send an `Authorization` header.
 
 Licence: framework and quiz text CC BY 4.0, Dr David Stokes.
